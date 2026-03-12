@@ -1,0 +1,41 @@
+.layout {
+  display: flex;
+}
+
+.sidebar{
+  width:180px;
+  height:100vh;
+  position:fixed;
+  left:0;
+  top:0;
+  background:#1f2937;
+  color: white;
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+}
+
+.sidebar a {
+  color: white;
+  text-decoration: none;
+  margin-bottom: 15px;
+}
+
+.sidebar a:hover {
+  opacity: 0.7;
+}
+
+.content{
+  margin-left:180px;
+  width:100%;
+  min-height:100vh;
+  padding:40px;
+  background:#f4f6fb;
+}
