@@ -7,6 +7,9 @@ import Schedule from "./pages/Schedule"
 import Pomodoro from "./pages/Pomodoro"
 import Login from "./pages/Login"
 import RegisterPage from "./pages/Register"
+import Settings from "./pages/Settings"
+import Home from "./components/Home"
+import About from "./pages/About"
 
 function App(){
 
@@ -21,10 +24,12 @@ function App(){
 
         <Route element={<MainLayout/>}>
 
-          <Route path="/home" element={<Tasks/>}/>
+          <Route path="/home" element={<Home/>}/>
+          <Route path="/tasks" element={<Tasks/>}/>
           <Route path="/schedule" element={<Schedule/>}/>
           <Route path="/pomodoro" element={<Pomodoro/>}/>
-
+          <Route path="/settings" element={<Settings/>}/>
+          <Route path="/about" element={<About/>} />
         </Route>
 
       </Routes>

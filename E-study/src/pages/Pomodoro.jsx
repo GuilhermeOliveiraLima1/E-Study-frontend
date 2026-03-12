@@ -1,7 +1,7 @@
 function Pomodoro(){
 
   return(
-    <div>
+    <div className="title-container">
       <h1>Pomodoro</h1>
     </div>
   )

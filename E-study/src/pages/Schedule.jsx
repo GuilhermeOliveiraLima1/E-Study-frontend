@@ -1,7 +1,7 @@
 function Schedule(){
 
   return(
-    <div>
+    <div className="title-container">
       <h1>Cronograma</h1>
     </div>
   )

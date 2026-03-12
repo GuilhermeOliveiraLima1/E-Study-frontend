@@ -11,12 +11,15 @@ function Sidebar(){
       <nav>
 
 
-        <Link to="/home">Tarefas</Link>
+        <Link to="/home">Inicio</Link>
+
+        <Link to="/tasks">Tarefas</Link>
 
         <Link to="/schedule">Cronograma</Link>
 
         <Link to="/pomodoro">Pomodoro</Link>
 
+        <Link to="/settings">Configurações</Link>
       </nav>
 
     </aside>
