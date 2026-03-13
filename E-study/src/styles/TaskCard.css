@@ -1,0 +1,147 @@
+.task-card {
+  width: 300px;
+  height: 210px;
+
+  background: #f9fafb;
+
+  border: 1px solid #3793e6; /* borda sempre visível */
+
+  border-radius: 12px;
+  padding: 18px;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  transition: all 0.2s ease;
+}
+
+.task-card:hover {
+  transform: translateY(-4px);
+
+  border-color: #000000; /* muda cor da borda */
+
+  box-shadow: 0 10px 22px rgba(0,0,0,0.10);
+}
+
+/* header */
+
+.task-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.task-header input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.task-header h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+/* descrição */
+
+.task-desc {
+  font-size: 0.9rem;
+  color: #4b5563;
+  line-height: 1.4;
+
+  overflow: hidden;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+
+.task-desc.expandido {
+  -webkit-line-clamp: unset;
+  line-clamp: unset;
+  display: block;
+}
+
+/* botão ler mais */
+
+.read-more {
+  font-size: 0.85rem;
+  color: #2563eb;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.read-more:hover {
+  text-decoration: underline;
+}
+
+/* footer */
+
+.task-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.task-footer span {
+  background: #e5e7eb;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+/* tarefa concluída */
+
+.task-card.completed {
+  background: #ecfdf5;
+  border-color: #22c55e;
+}
+
+.task-card.completed h3 {
+  text-decoration: line-through;
+  color: #6b7280;
+}
+
+.task-card hr {
+  border-top: 1px solid #000000;
+  margin: 0px 0;
+}
+.task-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.edit-btn {
+  background: #3b82f6;
+  border: none;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.edit-btn:hover {
+  background: #2563eb;
+}
+
+.delete-btn {
+  background: #ef4444;
+  border: none;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background: #dc2626;
+}
