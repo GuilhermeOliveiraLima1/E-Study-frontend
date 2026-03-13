@@ -10,6 +10,8 @@ import RegisterPage from "./pages/Register"
 import Settings from "./pages/Settings"
 import Home from "./components/Home"
 import About from "./pages/About"
+import Account from "./pages/Account"
+import Notifications from "./pages/Notifications"
 
 function App(){
 
@@ -30,6 +32,8 @@ function App(){
           <Route path="/pomodoro" element={<Pomodoro/>}/>
           <Route path="/settings" element={<Settings/>}/>
           <Route path="/about" element={<About/>} />
+          <Route path="/account" element={<Account/>} />
+          <Route path="/notifications" element={<Notifications/>} />
         </Route>
 
       </Routes>

@@ -6,10 +6,12 @@ function Menu(){
   const navigate = useNavigate()
 
   return(
-
+    
     <div className="settings-container">
 
-      <button className="settings-button">
+      <button className="settings-button"
+      onClick={() => navigate("/account")}
+      >
         Conta
       </button>
 
@@ -17,7 +19,9 @@ function Menu(){
         Histórico de Tarefas Concluídas
       </button>
 
-      <button className="settings-button">
+      <button className="settings-button"
+      onClick={() => navigate("/notifications")}
+      >
         Notificações
       </button>
 
