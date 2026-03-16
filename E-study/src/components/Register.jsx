@@ -1,15 +1,39 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(name, email, password);
+    try {
+      const response = await fetch("http://localhost:5000/User", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          password: password,
+        }),
+      });
+      const data = await response.json();
+      console.log(data);
+
+      if (response.ok) {
+        localStorage.setItem("token", data.token);
+        navigate("/home");
+      } else {
+        alert("Erro ao criar conta");
+      }
+    } catch (error) {
+      console.error("Erro no registro:", error);
+    }
   };
 
   return (
@@ -47,11 +71,9 @@ function Register() {
         />
       </div>
 
-      <Link to="/home">
-        <button className="register-submit" type="submit">
-          Criar Conta
-        </button>
-      </Link>
+      <button className="register-submit" type="submit">
+        Criar Conta
+      </button>
       <p>
         Já tem conta? <Link to="/">Login</Link>
       </p>

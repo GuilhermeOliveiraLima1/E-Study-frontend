@@ -5,18 +5,41 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(email);
-    console.log(password);
+    try {
+      const response = await fetch("http://localhost:5000/Login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      });
+
+      const data = await response.json();
+      console.log(data);
+
+      // se login for válido
+      if (response.ok) {
+        localStorage.setItem("token", data.token);
+        navigate("/home");
+      } else {
+        alert("Email ou senha inválidos");
+      }
+    } catch (error) {
+      console.error("Erro no login:", error);
+    }
   };
 
   return (
     <form className="login-form" onSubmit={handleSubmit}>
       <div className="input-group">
         <label>Email</label>
-
         <input
           type="email"
           placeholder="Digite seu email"
@@ -27,7 +50,6 @@ function Login() {
 
       <div className="input-group">
         <label>Senha</label>
-
         <input
           type="password"
           placeholder="Digite sua senha"
@@ -36,11 +58,12 @@ function Login() {
         />
       </div>
 
-      <button onClick={() => navigate("/home")} className="login-button" type="submit">
+      <button className="login-button" type="submit">
         Entrar
-      </button >
+      </button>
+
       <div className="register-link">
-        <p className="register-link">
+        <p>
           Não tem conta? <Link to="/register">Registrar</Link>
         </p>
       </div>
