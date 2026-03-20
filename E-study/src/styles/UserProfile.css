@@ -11,8 +11,8 @@
   align-items: center;
 }
 
-.modal-box1 {
-  background: white;
+.modal-box {
+  background: rgb(2, 133, 255);;
   padding: 20px;
   border-radius: 8px;
   width: 300px;
@@ -20,20 +20,10 @@
 }
 
 .modal-actions {
-  display: flex;
-  justify-content: space-between;
   margin-top: 20px;
 }
 
-.btn-danger {
-  background-color: red;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  cursor: pointer;
-}
-
-.warning {
-  color: red;
-  font-size: 14px;
+button{
+    background-color: black;
+    color: white;
 }

@@ -3,12 +3,14 @@ import { useState } from "react"
 import ResetPassword from "./ResetPassword"
 import { useNavigate } from "react-router-dom"
 import DeleteAccount from "./DeleteAccount"
+import UserProfile from "./UserProfile"
 
 function Menu(){
 
   const navigate = useNavigate()
   const [mostrarModal, setMostrarModal] = useState(false)
   const [mostrarDelete, setMostrarDelete] = useState(false)
+  const [mostrarProfile, setMostrarProfile] = useState(false)
 
   function logout(){
     localStorage.removeItem("token")
@@ -40,9 +42,15 @@ function Menu(){
         <DeleteAccount fechar={() => setMostrarDelete(false)} />
       )}
 
-      <button className="settings-button">
+      <button 
+        className="settings-button"
+        onClick={() => setMostrarProfile(true)}
+      >
         Dados Pessoais
       </button>
+      {mostrarProfile && (
+        <UserProfile fechar={() => setMostrarProfile(false)} />
+      )}
 
       <button className="settings-button" onClick={logout}>
           Sair

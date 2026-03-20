@@ -35,7 +35,7 @@ function DeleteAccount({ fechar }) {
   return (
     <div className="modal-overlay">
 
-      <div className="modal-box">
+      <div className="modal-box1">
 
         <h2>Excluir Conta</h2>
 
