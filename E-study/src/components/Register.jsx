@@ -26,7 +26,7 @@ function Register() {
       console.log(data);
 
       if (response.ok) {
-        localStorage.setItem("token", data.token);
+        localStorage.setItem("token", data.tokens.accessToken);
         navigate("/home");
       } else {
         alert("Erro ao criar conta");
