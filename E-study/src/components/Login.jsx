@@ -26,7 +26,7 @@ function Login() {
 
       // se login for válido
       if (response.ok) {
-        localStorage.setItem("token", data.token);
+        localStorage.setItem("token", data.tokens.accessToken)
         navigate("/home");
       } else {
         alert("Email ou senha inválidos");
