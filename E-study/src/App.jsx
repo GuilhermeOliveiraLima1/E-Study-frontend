@@ -4,14 +4,13 @@ import MainLayout from "./layouts/MainLayout";
 
 import Tasks from "./pages/Tasks";
 import Schedule from "./pages/Schedule";
-import Pomodoro from "./pages/Pomodoro";
+import Pomodoro from "./pages/PomodoroPage";
 import Login from "./pages/Login";
 import RegisterPage from "./pages/Register";
 import Settings from "./pages/Settings";
 import Home from "./components/Home";
 import About from "./pages/About";
 import Account from "./pages/Account";
-import Notifications from "./pages/Notifications";
 import PrivateRoute from "./components/PriveteRoute";
 function App() {
   return (
@@ -34,7 +33,6 @@ function App() {
           <Route path="/settings" element={<Settings />} />
           <Route path="/about" element={<About />} />
           <Route path="/account" element={<Account />} />
-          <Route path="/notifications" element={<Notifications />} />
         </Route>
       </Routes>
     </BrowserRouter>
