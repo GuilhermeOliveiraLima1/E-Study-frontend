@@ -19,12 +19,6 @@ function Menu(){
         Histórico de Tarefas Concluídas
       </button>
 
-      <button className="settings-button"
-      onClick={() => navigate("/notifications")}
-      >
-        Notificações
-      </button>
-
       <button
         className="settings-button"
         onClick={() => navigate("/about")}

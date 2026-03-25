@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "../styles/TaskEditCard.css";
 
+const MAX_CHARS = 200;
+
 export default function TaskEditCard({ task, onSave, onCancel }) {
 
   const [title, setTitle] = useState(task.title);
@@ -35,11 +37,18 @@ export default function TaskEditCard({ task, onSave, onCancel }) {
 
           <div className="form-group">
             <label>Descrição</label>
+
             <textarea
               rows="4"
               value={description}
+              maxLength={MAX_CHARS}
               onChange={(e) => setDescription(e.target.value)}
             />
+
+            <span className="char-counter">
+              {description.length}/{MAX_CHARS}
+            </span>
+
           </div>
 
           <div className="edit-actions">
