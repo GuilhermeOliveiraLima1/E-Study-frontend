@@ -26,7 +26,7 @@ function ResetPassword({ fechar }) {
 
     try {
 
-      const response = await fetch("http://localhost:5000/user/change-password", {
+      const response = await fetch(import.meta.env.VITE_API_URL + "/user/change-password", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

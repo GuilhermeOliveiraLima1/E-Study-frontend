@@ -12,7 +12,7 @@ function UserProfile({ fechar }) {
 
   async function carregarUsuario() {
     try {
-      const response = await fetch("http://localhost:5000/user", {
+      const response = await fetch(import.meta.env.VITE_API_URL + "/user", {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${localStorage.getItem("token")}`

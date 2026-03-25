@@ -4,7 +4,7 @@ import MainLayout from "./layouts/MainLayout";
 
 import Tasks from "./pages/Tasks";
 import Schedule from "./pages/Schedule";
-import Pomodoro from "./pages/Pomodoro";
+import Pomodoro from "./pages/PomodoroPage";
 import Login from "./pages/Login";
 import RegisterPage from "./pages/Register";
 import Settings from "./pages/Settings";

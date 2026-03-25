@@ -1,0 +1,171 @@
+
+.pomodoro-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 30px;
+    max-width: 350px;
+    margin: 40px auto;
+    background: #1e1e2f;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.pomodoro-container h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+.timer-display {
+    font-size: 3rem;
+    font-weight: bold;
+    background: #2a2a40;
+    padding: 15px 25px;
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.settings-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    padding: 15px;
+    background: #262638;
+    border-radius: 10px;
+    border: 1px solid #3a3a50;
+}
+
+.settings-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.settings-group label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #e0e0e0;
+}
+
+.timer-input-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.timer-input {
+    padding: 8px 10px;
+    background: #1e1e2f;
+    border: 1px solid #4a4a60;
+    border-radius: 6px;
+    color: #ffffff;
+    font-size: 1.1rem;
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 2px;
+    transition: border-color 0.2s ease;
+    font-family: 'Courier New', monospace;
+}
+
+.timer-input:focus {
+    outline: none;
+    border-color: #4cafef;
+    box-shadow: 0 0 5px rgba(76, 175, 239, 0.3);
+}
+
+.timer-input:disabled {
+    background: #15151f;
+    color: #808090;
+    cursor: not-allowed;
+}
+
+.timer-error {
+    font-size: 0.75rem;
+    color: #ef4444;
+    margin-top: -2px;
+    min-height: 16px;
+}
+
+.settings-panel > label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #e0e0e0;
+}
+
+.settings-panel > label input {
+    padding: 8px 10px;
+    background: #1e1e2f;
+    border: 1px solid #4a4a60;
+    border-radius: 6px;
+    color: #ffffff;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease;
+}
+
+.settings-panel > label input:focus {
+    outline: none;
+    border-color: #4cafef;
+    box-shadow: 0 0 5px rgba(76, 175, 239, 0.3);
+}
+
+.settings-panel > label input:disabled {
+    background: #15151f;
+    color: #808090;
+    cursor: not-allowed;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    justify-content: center;
+}
+
+button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+/* Botão principal */
+.btn-primary {
+    background: #4cafef;
+    color: #fff;
+    flex: 1;
+    max-width: 150px;
+}
+
+.btn-primary:hover {
+    background: #3a9edb;
+}
+
+/* Botão secundário */
+.btn-secondary {
+    background: #555;
+    color: #fff;
+    flex: 1;
+    max-width: 150px;
+}
+
+.btn-secondary:hover {
+    background: #444;
+}
+
+/* Efeito ao clicar */
+button:active {
+    transform: scale(0.95);
+}

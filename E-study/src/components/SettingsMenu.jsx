@@ -18,7 +18,7 @@ function Menu(){
       <button className="settings-button">
         Histórico de Tarefas Concluídas
       </button>
-
+      
       <button
         className="settings-button"
         onClick={() => navigate("/about")}
