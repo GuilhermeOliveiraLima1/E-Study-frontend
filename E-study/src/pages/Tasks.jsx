@@ -23,7 +23,7 @@ export default function TasksPage() {
 
   const [editingTask, setEditingTask] = useState(null);
   const [viewTask, setViewTask] = useState(null);
-  const [search, setSearch] = useState(""); // 🔥 novo estado
+  const [search, setSearch] = useState(""); // novo estado
 
   function handleEdit(task) {
     setEditingTask(task);
@@ -46,7 +46,7 @@ export default function TasksPage() {
     setViewTask(null);
   }
 
-  // 🔥 filtro de busca
+  // filtro de busca
   const filteredTasks = tasks.filter(task =>
     task.title.toLowerCase().includes(search.toLowerCase())
   );
@@ -54,7 +54,6 @@ export default function TasksPage() {
   return (
     <div className="tasks-page">
 
-      {/* 🔍 barra de busca */}
       <div className="search-bar">
         <input
           type="text"
@@ -76,7 +75,6 @@ export default function TasksPage() {
         ))}
       </div>
 
-      {/* 🔥 mensagem quando não encontrar */}
       {filteredTasks.length === 0 && (
         <p style={{ textAlign: "center" }}>
           Nenhuma tarefa encontrada
