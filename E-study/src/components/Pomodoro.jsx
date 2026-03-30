@@ -106,18 +106,48 @@ export default function Pomodoro() {
 
   // ---------- Som ----------
   const playNotificationSound = useCallback(() => {
-    const audio = new AudioContext();
-    const osc = audio.createOscillator();
-    const gain = audio.createGain();
+    try {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) return;
 
-    osc.connect(gain);
-    gain.connect(audio.destination);
+      const audio = new AudioContextClass();
+      const now = audio.currentTime;
 
-    osc.frequency.value = 800;
-    gain.gain.value = 0.2;
+      const playTone = (frequency, startOffset, duration, volume) => {
+        const osc = audio.createOscillator();
+        const gain = audio.createGain();
 
-    osc.start();
-    osc.stop(audio.currentTime + 0.3);
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(frequency, now + startOffset);
+
+        // Quick attack + smooth release to avoid clicks.
+        gain.gain.setValueAtTime(0.0001, now + startOffset);
+        gain.gain.exponentialRampToValueAtTime(
+          volume,
+          now + startOffset + 0.03,
+        );
+        gain.gain.exponentialRampToValueAtTime(
+          0.0001,
+          now + startOffset + duration,
+        );
+
+        osc.connect(gain);
+        gain.connect(audio.destination);
+
+        osc.start(now + startOffset);
+        osc.stop(now + startOffset + duration);
+      };
+
+      // Two-note chime (A5 -> E6).
+      playTone(880, 0, 0.22, 0.18);
+      playTone(1318.5, 0.2, 0.28, 0.14);
+
+      setTimeout(() => {
+        audio.close().catch(() => {});
+      }, 800);
+    } catch {
+      // Fails silently if browser blocks or has no audio support.
+    }
   }, []);
 
   // ---------- Timer ----------
@@ -130,19 +160,29 @@ export default function Pomodoro() {
           if (minutes === 0) {
             playNotificationSound();
 
-            const nextIsBreak = !isBreak;
-
+            // Focus ended: increment cycle and stop if that was the last one.
             if (!isBreak) {
-              setCurrentCycle((c) => (c < cycles ? c + 1 : c));
+              if (currentCycle >= cycles) {
+                setIsActive(false);
+                setIsBreak(false);
+                setMinutes(studyTimeMin);
+                setSeconds(studyTimeSec);
+                setCurrentCycle(1);
+                return;
+              }
+
+              setCurrentCycle((c) => Math.min(c + 1, cycles));
+
+              setIsBreak(true);
+              setMinutes(breakTimeMin);
+              setSeconds(breakTimeSec);
+              return;
             }
 
-            setIsBreak(nextIsBreak);
-            setMinutes(nextIsBreak ? breakTimeMin : studyTimeMin);
-            setSeconds(nextIsBreak ? breakTimeSec : studyTimeSec);
-            if (currentCycle >= cycles) {
-              setIsActive(false);
-              setCurrentCycle(1);
-            }
+            // Break ended: go back to focus without incrementing cycles.
+            setIsBreak(false);
+            setMinutes(studyTimeMin);
+            setSeconds(studyTimeSec);
             return;
           }
 
