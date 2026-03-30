@@ -16,7 +16,7 @@ export default function TasksPage() {
     {
       id: 2,
       title: "Criar dashboard",
-      description: "Adicionar gráficos de desempenho fdhdfsguidfshuhndfusvbjusnsihufdhuhnvnsnvvjdsnfighfdfshbuisbybuydefrygbeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeerereeeeeeeeeeeeeeeeeeeeeeeeeeeeerrrrrrrrrrrrrrrrrrgxy",
+      description: "Adicionar gráficos de desempenho fdhdfsguidfshuhndfusnsihufdhuhnvnsnvvjdsnfighfdfshbuisbybuydefrygbeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeerereeeeeeeeeeeeeeeeeeeeeeeeeeeeerrrrrrrrrrrrrrrrrrgxy",
       deadline: "25/03"
     }
   ];
