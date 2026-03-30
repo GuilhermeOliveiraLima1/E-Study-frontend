@@ -25,8 +25,11 @@ export default function TaskCard({ task, onDelete, onEdit, onView }) {
     <div className="task-card" onClick={() => onView(task)}>
 
       <div className="task-header">
-        <input type="checkbox" />
-        <h3>{task.title}</h3>
+    <input
+      type="checkbox"
+      onClick={(e) => e.stopPropagation()}
+    />     
+   <h3>{task.title}</h3>
       </div>
 
       <div className="task-footer">
