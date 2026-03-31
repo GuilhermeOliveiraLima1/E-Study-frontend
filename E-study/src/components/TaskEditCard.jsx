@@ -6,7 +6,9 @@ const MAX_CHARS = 200;
 export default function TaskEditCard({ task, onSave, onCancel }) {
 
   const [title, setTitle] = useState(task.title);
-  const [description, setDescription] = useState(task.description);
+  const [description, setDescription] = useState(task.description || "");
+  const [dueDate, setDueDate] = useState(task.dueDate ? String(task.dueDate).slice(0, 10) : "");
+  const [isCompleted, setIsCompleted] = useState(task.isCompleted === true);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -14,7 +16,9 @@ export default function TaskEditCard({ task, onSave, onCancel }) {
     onSave({
       ...task,
       title,
-      description
+      description,
+      dueDate: dueDate || null,
+      isCompleted,
     });
   }
 
@@ -32,6 +36,7 @@ export default function TaskEditCard({ task, onSave, onCancel }) {
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
+              required
             />
           </div>
 
@@ -49,6 +54,26 @@ export default function TaskEditCard({ task, onSave, onCancel }) {
               {description.length}/{MAX_CHARS}
             </span>
 
+          </div>
+
+          <div className="form-group">
+            <label>Data limite</label>
+            <input
+              type="date"
+              value={dueDate}
+              onChange={(e) => setDueDate(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group" style={{ flexDirection: "row", alignItems: "center", gap: "8px" }}>
+            <input
+              id="task-is-completed"
+              type="checkbox"
+              checked={isCompleted}
+              onChange={(e) => setIsCompleted(e.target.checked)}
+            />
+            <label htmlFor="task-is-completed">Concluida</label>
           </div>
 
           <div className="edit-actions">

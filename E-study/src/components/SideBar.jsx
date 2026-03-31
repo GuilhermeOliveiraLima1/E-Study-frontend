@@ -7,7 +7,7 @@ function Sidebar(){
     <aside className="sidebar">
 
       <h2 className="logo">E-Study</h2>
-
+      <p>Bem-vindo, {localStorage.getItem("userName")}</p>
       <nav>
 
 

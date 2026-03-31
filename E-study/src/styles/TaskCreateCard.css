@@ -1,0 +1,56 @@
+.create-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.create-card {
+  width: 420px;
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.create-card h2 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.create-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.create-actions button {
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.create-actions .save {
+  background: #2563eb;
+  color: white;
+}
+
+.create-actions .cancel {
+  background: #e5e7eb;
+  color: #111;
+}
+
+.create-actions button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}

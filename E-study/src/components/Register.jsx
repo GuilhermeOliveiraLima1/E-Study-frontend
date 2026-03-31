@@ -11,25 +11,36 @@ function Register() {
     e.preventDefault();
 
     try {
-      const response = await fetch(import.meta.env.VITE_API_URL + "/User", {
+      const token = localStorage.getItem("token");
+      const headers = {
+        "Content-Type": "application/json",
+      };
+
+      if (token) {
+        headers.Authorization = `Bearer ${token}`;
+      }
+
+      const response = await fetch(import.meta.env.VITE_API_URL + "/user/register", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers,
         body: JSON.stringify({
           name: name,
           email: email,
           password: password,
         }),
       });
-      const data = await response.json();
+
+      const responseText = await response.text();
+      const data = responseText ? JSON.parse(responseText) : null;
       console.log(data);
 
       if (response.ok) {
-        localStorage.setItem("token", data.tokens.accessToken);
+        if (data?.tokens?.accessToken) {
+          localStorage.setItem("token", data.tokens.accessToken);
+        }
         navigate("/home");
       } else {
-        alert("Erro ao criar conta");
+        alert(data?.errors?.[0] || "Erro ao criar conta");
       }
     } catch (error) {
       console.error("Erro no registro:", error);

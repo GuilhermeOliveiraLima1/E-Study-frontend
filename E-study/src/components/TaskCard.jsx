@@ -2,7 +2,14 @@ import React from "react";
 import Swal from "sweetalert2";
 import "../styles/TaskCard.css";
 
-export default function TaskCard({ task, onDelete, onEdit, onView }) {
+export default function TaskCard({ task, onDelete, onEdit, onView, onToggleComplete }) {
+  const MAX_DESCRIPTION_LENGTH = 60;
+
+  const descriptionText = task?.description ?? "";
+  const descriptionPreview =
+    descriptionText.length > MAX_DESCRIPTION_LENGTH
+      ? `${descriptionText.slice(0, MAX_DESCRIPTION_LENGTH).trimEnd()}...`
+      : descriptionText;
 
   async function deleteTask() {
     const result = await Swal.fire({
@@ -25,17 +32,20 @@ export default function TaskCard({ task, onDelete, onEdit, onView }) {
     <div className="task-card" onClick={() => onView(task)}>
 
       <div className="task-header">
-    <input
-      type="checkbox"
-      onClick={(e) => e.stopPropagation()}
-    />     
-   <h3>{task.title}</h3>
+        <input
+          type="checkbox"
+          checked={task.isCompleted === true}
+          onClick={(e) => e.stopPropagation()}
+          onChange={(e) => onToggleComplete(task, e.target.checked)}
+        />
+        <h3>{task.title}</h3>
+      </div>
+
+      <div className="task-description">
+        <p>{descriptionPreview}</p>
       </div>
 
       <div className="task-footer">
-
-        <span>{task.deadline}</span>
-
         <div className="task-actions">
 
           <button

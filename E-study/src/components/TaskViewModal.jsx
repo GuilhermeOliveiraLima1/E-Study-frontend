@@ -14,7 +14,7 @@ export default function TaskViewModal({ task, onClose }) {
         </p>
 
         <span className="view-deadline">
-          Prazo: {task.deadline}
+          Prazo: {task.dueDate?.slice(0, 10) || task.deadline || "Nao informado"}
         </span>
 
         <button onClick={onClose}>

@@ -5,12 +5,13 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const apiUrl = (import.meta.env.VITE_API_URL || "").trim();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await fetch(import.meta.env.VITE_API_URL + "/Login", {
+      const response = await fetch(apiUrl + "/Login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -21,15 +22,17 @@ function Login() {
         }),
       });
 
-      const data = await response.json();
+      const responseText = await response.text();
+      const data = responseText ? JSON.parse(responseText) : null;
       console.log(data);
 
       // se login for válido
       if (response.ok) {
-        localStorage.setItem("token", data.tokens.accessToken)
+        localStorage.setItem("token", data?.tokens?.accessToken || "")
+        localStorage.setItem("userName", data?.name || "")
         navigate("/home");
       } else {
-        alert("Email ou senha inválidos");
+        alert(data?.errors?.[0] || "Email ou senha inválidos");
       }
     } catch (error) {
       console.error("Erro no login:", error);
