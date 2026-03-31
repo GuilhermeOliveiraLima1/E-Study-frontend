@@ -53,7 +53,6 @@ export default function TaskCreateCard({ onCreate, onCancel, isSubmitting }) {
               type="date"
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}
-              required
             />
           </div>
 

@@ -45,6 +45,12 @@
   gap: 6px;
 }
 
+.form-group-inline {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
 .form-group input,
 .form-group textarea {
   border: 1px solid #d1d5db;

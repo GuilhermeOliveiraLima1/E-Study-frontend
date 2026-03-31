@@ -62,11 +62,10 @@ export default function TaskEditCard({ task, onSave, onCancel }) {
               type="date"
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}
-              required
             />
           </div>
 
-          <div className="form-group" style={{ flexDirection: "row", alignItems: "center", gap: "8px" }}>
+          <div className="form-group form-group-inline">
             <input
               id="task-is-completed"
               type="checkbox"

@@ -67,16 +67,13 @@ export default function TasksPage() {
       return;
     }
 
-    if (!updatedTask.dueDate) {
-      alert("Informe a data limite da tarefa.");
-      return;
-    }
-
     try {
       const payload = {
         title: updatedTask.title?.trim() || "",
         description: updatedTask.description?.trim() || "",
-        dueDate: new Date(`${updatedTask.dueDate}T00:00:00`).toISOString(),
+        dueDate: updatedTask.dueDate
+          ? new Date(`${updatedTask.dueDate}T00:00:00`).toISOString()
+          : null,
         isCompleted: updatedTask.isCompleted === true,
       };
 
@@ -210,18 +207,15 @@ export default function TasksPage() {
       return;
     }
 
-    if (!newTask.dueDate) {
-      alert("Informe a data limite da tarefa.");
-      return;
-    }
-
     try {
       setIsSubmittingCreate(true);
 
       const payload = {
         title: newTask.title,
         description: newTask.description || "",
-        dueDate: new Date(`${newTask.dueDate}T00:00:00`).toISOString(),
+        dueDate: newTask.dueDate
+          ? new Date(`${newTask.dueDate}T00:00:00`).toISOString()
+          : null,
       };
 
       const response = await fetch(apiUrl + "/user-tasks", {
