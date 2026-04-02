@@ -16,14 +16,14 @@
   border: none;
   border-radius: 8px;
   padding: 10px 16px;
-  background: #2563eb;
+  background: #3b82f6;
   color: #fff;
   font-size: 0.95rem;
   cursor: pointer;
 }
 
 .create-task-btn:hover {
-  background: #1d4ed8;
+  background: #2563eb;
 }
 
 /* filtro */
