@@ -1,49 +1,82 @@
+/* overlay com blur moderno */
 .view-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(6px);
 
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 999;
 }
 
-/* card principal */
+/* card */
 .view-card {
-  background: white;
-  width: 420px;
+  background: #ffffff;
+  width: 450px;
   max-width: 90%;
-  max-height: 80vh;
+  max-height: 90vh; /* aumenta um pouco */
 
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 20px;
 
   display: flex;
   flex-direction: column;
+  gap: 15px;
+
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+
+  animation: fadeIn 0.25s ease;
+
+  overflow-y: auto; /* 👈 agora o scroll fica no card inteiro, não só na descrição */
+}
+
+/* animação */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 /* header */
-.view-card h2 {
-  margin: 0 0 10px 0;
-  font-size: 1.4rem;
-  color: #111;
+.view-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-/* descrição com scroll */
-.view-description {
-  flex: 1;
+.view-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #0f172a;
+}
 
+/* descrição */
+.view-description {
   line-height: 1.6;
-  color: #444;
+  color: #334155;
 
   word-break: break-word;
-  overflow-wrap: break-word;
+}
 
-  overflow-y: auto;
-  margin-bottom: 15px;
+/* scrollbar bonita */
+.view-description::-webkit-scrollbar {
+  width: 6px;
+}
+
+.view-description::-webkit-scrollbar-thumb {
+  background: #cbd5f5;
+  border-radius: 10px;
 }
 
 /* footer */
@@ -55,26 +88,28 @@
 
 /* prazo */
 .view-deadline {
-  background: #ff0000;
-  padding: 6px;
-  border-radius: 6px;
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 6px 10px;
+  border-radius: 999px;
   font-size: 0.8rem;
-  color: #000;
-
-  width: 100px;
-  text-align: center;
+  font-weight: 500;
 }
 
-/* botão */
-.view-footer button {
+/* botão principal */
+.primary-btn {
   border: none;
   background: #2563eb;
   color: white;
-  padding: 6px 14px;
-  border-radius: 6px;
+  padding: 8px 16px;
+  border-radius: 8px;
+
   cursor: pointer;
+  transition: 0.2s;
+  font-weight: 500;
 }
 
-.view-footer button:hover {
+.primary-btn:hover {
   background: #1d4ed8;
+  transform: translateY(-1px);
 }

@@ -37,6 +37,7 @@ function Register() {
       if (response.ok) {
         if (data?.tokens?.accessToken) {
           localStorage.setItem("token", data.tokens.accessToken);
+          localStorage.setItem("userName", data.name)
         }
         navigate("/home");
       } else {

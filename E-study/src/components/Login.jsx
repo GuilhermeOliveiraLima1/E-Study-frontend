@@ -27,13 +27,16 @@ function Login() {
       console.log(data);
 
       // se login for válido
-      if (response.ok) {
-        localStorage.setItem("token", data?.tokens?.accessToken || "")
-        localStorage.setItem("userName", data?.name || "")
-        navigate("/home");
-      } else {
-        alert(data?.errors?.[0] || "Email ou senha inválidos");
-      }
+      if (response.ok && data?.tokens?.accessToken) {
+      localStorage.removeItem("token");
+
+      localStorage.setItem("token", data.tokens.accessToken);
+      localStorage.setItem("userName", data.name || "");
+
+  navigate("/home");
+} else {
+  alert("Erro ao autenticar usuário");
+}
     } catch (error) {
       console.error("Erro no login:", error);
     }

@@ -9,7 +9,7 @@ function DeleteAccount({ fechar }) {
 
     try {
 
-      const response = await fetch(import.meta.env.VITE_API_URL + "/user", {
+      const response = await fetch(import.meta.env.VITE_API_URL + "/user/delete", {
         method: "DELETE",
         headers: {
           "Authorization": `Bearer ${localStorage.getItem("token")}`
