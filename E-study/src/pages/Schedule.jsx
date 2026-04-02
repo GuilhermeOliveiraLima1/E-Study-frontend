@@ -1,11 +1,7 @@
-function Schedule(){
+import CronogramaSemanal from "../components/CronogramaSemanal";
 
-  return(
-    <div className="title-container">
-      <h1>Cronograma</h1>
-    </div>
-  )
-
+function Schedule() {
+  return <CronogramaSemanal />;
 }
 
-export default Schedule
+export default Schedule;

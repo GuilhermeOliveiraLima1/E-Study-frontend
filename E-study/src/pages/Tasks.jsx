@@ -68,12 +68,19 @@ export default function TasksPage() {
     }
 
     try {
+      let dueDate = null;
+      if (updatedTask.dueDate) {
+        // Se já é ISO ou contém T, usar diretamente; senão, adicionar T00:00:00
+        const dueDateStr = updatedTask.dueDate.includes("T") 
+          ? updatedTask.dueDate 
+          : `${updatedTask.dueDate}T00:00:00`;
+        dueDate = new Date(dueDateStr).toISOString();
+      }
+
       const payload = {
         title: updatedTask.title?.trim() || "",
         description: updatedTask.description?.trim() || "",
-        dueDate: updatedTask.dueDate
-          ? new Date(`${updatedTask.dueDate}T00:00:00`).toISOString()
-          : null,
+        dueDate: dueDate,
         isCompleted: updatedTask.isCompleted === true,
       };
 
