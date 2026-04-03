@@ -49,7 +49,7 @@ function Home() {
         end_date: endDate,
       });
 
-      const response = await fetch(`http://localhost:5000/event?${params.toString()}`, {
+      const response = await fetch(`${apiUrl}/event?${params.toString()}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -91,7 +91,7 @@ function Home() {
     } finally {
       setLoadingEvents(false);
     }
-  }, []);
+  }, [apiUrl]);
 
   const loadUrgentTasks = useCallback(async () => {
     const token = localStorage.getItem("token");

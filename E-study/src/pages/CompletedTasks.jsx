@@ -1,19 +1,15 @@
 import { useCallback, useEffect, useState } from "react";
 import TaskCard from "../components/TaskCard";
-import TaskCreateCard from "../components/TaskCreateCard";
 import TaskEditCard from "../components/TaskEditCard";
 import TaskViewModal from "../components/TaskViewModal";
 import "../styles/TaskPage.css";
 
-export default function TasksPage() {
+export default function CompletedTasks() {
   const apiUrl = (import.meta.env.VITE_API_URL || "").trim();
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
   const [editingTask, setEditingTask] = useState(null);
-  const [isCreating, setIsCreating] = useState(false);
-  const [isSubmittingCreate, setIsSubmittingCreate] = useState(false);
   const [viewTask, setViewTask] = useState(null);
   const [search, setSearch] = useState("");
 
@@ -44,7 +40,7 @@ export default function TasksPage() {
       const data = await response.json();
       setTasks(Array.isArray(data) ? data : []);
     } catch (requestError) {
-      console.error("Erro ao buscar tarefas:", requestError);
+      console.error("Erro ao buscar tarefas concluídas:", requestError);
       setError("Erro ao carregar tarefas.");
     } finally {
       setLoading(false);
@@ -59,6 +55,43 @@ export default function TasksPage() {
     setEditingTask(task);
   }
 
+  function handleCancelEdit() {
+    setEditingTask(null);
+  }
+
+  async function handleView(task) {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      setViewTask(task);
+      return;
+    }
+
+    try {
+      const response = await fetch(`${apiUrl}/user-tasks/${task.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        setViewTask(task);
+        return;
+      }
+
+      const responseText = await response.text();
+      const data = responseText ? JSON.parse(responseText) : null;
+      setViewTask(data || task);
+    } catch (requestError) {
+      console.error("Erro ao carregar detalhes da tarefa:", requestError);
+      setViewTask(task);
+    }
+  }
+
+  function handleCloseView() {
+    setViewTask(null);
+  }
+
   async function handleSave(updatedTask) {
     const token = localStorage.getItem("token");
 
@@ -70,8 +103,8 @@ export default function TasksPage() {
     try {
       let dueDate = null;
       if (updatedTask.dueDate) {
-        const dueDateStr = updatedTask.dueDate.includes("T") 
-          ? updatedTask.dueDate 
+        const dueDateStr = updatedTask.dueDate.includes("T")
+          ? updatedTask.dueDate
           : `${updatedTask.dueDate}T00:00:00`;
         dueDate = new Date(dueDateStr).toISOString();
       }
@@ -123,43 +156,6 @@ export default function TasksPage() {
     }
   }
 
-  function handleCancel() {
-    setEditingTask(null);
-  }
-
-  async function handleView(task) {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      setViewTask(task);
-      return;
-    }
-
-    try {
-      const response = await fetch(`${apiUrl}/user-tasks/${task.id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (!response.ok) {
-        setViewTask(task);
-        return;
-      }
-
-      const responseText = await response.text();
-      const data = responseText ? JSON.parse(responseText) : null;
-      setViewTask(data || task);
-    } catch (requestError) {
-      console.error("Erro ao carregar detalhes da tarefa:", requestError);
-      setViewTask(task);
-    }
-  }
-
-  function handleCloseView() {
-    setViewTask(null);
-  }
-
   async function handleDeleteTask(id) {
     const token = localStorage.getItem("token");
 
@@ -197,63 +193,9 @@ export default function TasksPage() {
     });
   }
 
-  function handleOpenCreate() {
-    setIsCreating(true);
-  }
-
-  function handleCloseCreate() {
-    setIsCreating(false);
-  }
-
-  async function handleCreateTask(newTask) {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      alert("Token nao encontrado. Faca login novamente.");
-      return;
-    }
-
-    try {
-      setIsSubmittingCreate(true);
-
-      const payload = {
-        title: newTask.title,
-        description: newTask.description || "",
-        dueDate: newTask.dueDate
-          ? new Date(`${newTask.dueDate}T00:00:00`).toISOString()
-          : null,
-      };
-
-      const response = await fetch(apiUrl + "/user-tasks", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(payload),
-      });
-
-      const responseText = await response.text();
-      const data = responseText ? JSON.parse(responseText) : null;
-
-      if (!response.ok) {
-        alert(data?.errors?.[0] || responseText || "Erro ao criar tarefa");
-        return;
-      }
-
-      setIsCreating(false);
-      await fetchTasks();
-    } catch (requestError) {
-      console.error("Erro ao criar tarefa:", requestError);
-      alert("Erro ao criar tarefa");
-    } finally {
-      setIsSubmittingCreate(false);
-    }
-  }
-
   const filteredTasks = tasks.filter((task) => {
     const matchesSearch = (task.title || "").toLowerCase().includes(search.toLowerCase());
-    return matchesSearch && task.isCompleted !== true;
+    return matchesSearch && task.isCompleted === true;
   });
 
   return (
@@ -264,13 +206,10 @@ export default function TasksPage() {
       <div className="search-bar">
         <input
           type="text"
-          placeholder="Buscar tarefas..."
+          placeholder="Buscar tarefas concluídas..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <button className="create-task-btn" onClick={handleOpenCreate}>
-          Nova tarefa
-        </button>
       </div>
 
       <div className="tasks-container">
@@ -288,7 +227,7 @@ export default function TasksPage() {
 
       {filteredTasks.length === 0 && !loading && (
         <p style={{ textAlign: "center" }}>
-          Nenhuma tarefa pendente encontrada
+          Nenhuma tarefa concluída encontrada
         </p>
       )}
 
@@ -296,15 +235,7 @@ export default function TasksPage() {
         <TaskEditCard
           task={editingTask}
           onSave={handleSave}
-          onCancel={handleCancel}
-        />
-      )}
-
-      {isCreating && (
-        <TaskCreateCard
-          onCreate={handleCreateTask}
-          onCancel={handleCloseCreate}
-          isSubmitting={isSubmittingCreate}
+          onCancel={handleCancelEdit}
         />
       )}
 
@@ -314,7 +245,6 @@ export default function TasksPage() {
           onClose={handleCloseView}
         />
       )}
-
     </div>
   );
 }

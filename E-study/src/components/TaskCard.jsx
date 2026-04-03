@@ -28,6 +28,27 @@ export default function TaskCard({ task, onDelete, onEdit, onView, onToggleCompl
     }
   }
 
+  async function handleToggleCompletion(checked) {
+    const markingAsCompleted = checked === true;
+
+    const result = await Swal.fire({
+      title: markingAsCompleted ? "Concluir tarefa?" : "Marcar como pendente?",
+      text: markingAsCompleted
+        ? "Deseja marcar esta tarefa como concluída?"
+        : "Deseja marcar esta tarefa como pendente novamente?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#4facfe",
+      cancelButtonColor: "#d33",
+      confirmButtonText: markingAsCompleted ? "Sim, concluir" : "Sim, marcar como pendente",
+      cancelButtonText: "Cancelar",
+    });
+
+    if (result.isConfirmed) {
+      await onToggleComplete(task, checked);
+    }
+  }
+
   return (
     <div className="task-card" onClick={() => onView(task)}>
 
@@ -36,7 +57,7 @@ export default function TaskCard({ task, onDelete, onEdit, onView, onToggleCompl
           type="checkbox"
           checked={task.isCompleted === true}
           onClick={(e) => e.stopPropagation()}
-          onChange={(e) => onToggleComplete(task, e.target.checked)}
+          onChange={(e) => handleToggleCompletion(e.target.checked)}
         />
         <h3>{task.title}</h3>
       </div>

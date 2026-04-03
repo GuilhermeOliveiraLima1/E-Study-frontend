@@ -24,7 +24,7 @@ function UserProfile({ fechar }) {
 
   const carregarUsuario = useCallback(async () => {
     const token = localStorage.getItem("token")
-    const apiBaseUrl = (import.meta.env.VITE_API_URL || "http://localhost:5000").trim()
+    const apiBaseUrl = (import.meta.env.VITE_API_URL || "").trim()
 
     if (!token) {
       setLoading(false)

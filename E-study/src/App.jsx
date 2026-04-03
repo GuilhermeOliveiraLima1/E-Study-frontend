@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 
 import Tasks from "./pages/Tasks";
+import CompletedTasks from "./pages/CompletedTasks";
 import Schedule from "./pages/Schedule";
 import Pomodoro from "./pages/PomodoroPage";
 import Login from "./pages/Login";
@@ -28,6 +29,7 @@ function App() {
         >
           <Route path="/home" element={<Home />} />
           <Route path="/tasks" element={<Tasks />} />
+          <Route path="/tasks/completed" element={<CompletedTasks />} />
           <Route path="/schedule" element={<Schedule />} />
           <Route path="/pomodoro" element={<Pomodoro />} />
           <Route path="/settings" element={<Settings />} />

@@ -106,6 +106,7 @@ function formatEventToCell(event) {
 }
 
 export default function CronogramaSemanal() {
+  const apiUrl = (import.meta.env.VITE_API_URL || "").trim();
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -139,7 +140,7 @@ export default function CronogramaSemanal() {
         end_date: endDate,
       });
 
-      const response = await fetch(`http://localhost:5000/event?${params.toString()}`, {
+      const response = await fetch(`${apiUrl}/event?${params.toString()}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -179,7 +180,7 @@ export default function CronogramaSemanal() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [apiUrl]);
 
   useEffect(() => {
     loadEvents();
@@ -237,7 +238,7 @@ export default function CronogramaSemanal() {
       setError("");
       setSuccessMessage("");
 
-      const response = await fetch("http://localhost:5000/event", {
+      const response = await fetch(`${apiUrl}/event`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -303,7 +304,7 @@ export default function CronogramaSemanal() {
       setError("");
       setSuccessMessage("");
 
-      const response = await fetch(`http://localhost:5000/event/${eventId}`, {
+      const response = await fetch(`${apiUrl}/event/${eventId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -359,7 +360,7 @@ export default function CronogramaSemanal() {
       setError("");
       setSuccessMessage("");
 
-      const response = await fetch(`http://localhost:5000/event/${eventId}`, {
+      const response = await fetch(`${apiUrl}/event/${eventId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

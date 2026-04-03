@@ -10,13 +10,15 @@ function Menu(){
     <div className="settings-container">
 
       <button className="settings-button"
+      onClick={() => navigate("/tasks/completed")}
+      >
+        Histórico de Tarefas Concluídas
+      </button>
+
+      <button className="settings-button"
       onClick={() => navigate("/account")}
       >
         Conta
-      </button>
-
-      <button className="settings-button">
-        Histórico de Tarefas Concluídas
       </button>
       
       <button
