@@ -74,8 +74,8 @@
 
 .schedule-field input:focus,
 .schedule-field select:focus {
-  border-color: #4facfe;
-  box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.12);
+  border-color: #1d4ed8;
+  box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.12);
 }
 
 .schedule-field-wide {
@@ -94,7 +94,7 @@
   border: 0;
   border-radius: 12px;
   padding: 12px 18px;
-  background: linear-gradient(135deg, #4facfe 0%, #3793e6 100%);
+  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
   color: #ffffff;
   font-weight: 700;
   cursor: pointer;
@@ -150,7 +150,7 @@
 }
 
 .schedule-table thead th {
-  background: #4facfe;
+  background: #1d4ed8;
   color: #ffffff;
   font-weight: 700;
 }
