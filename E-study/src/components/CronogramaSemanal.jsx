@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import "../styles/CronogramaSemanal.css";
+import Swal from "sweetalert2";
 
 const dayOrder = [
   { key: "segunda", label: "Segunda" },
@@ -10,6 +11,7 @@ const dayOrder = [
   { key: "sabado", label: "Sábado" },
   { key: "domingo", label: "Domingo" },
 ];
+
 
 function formatDateToInput(date) {
   const year = date.getFullYear();
@@ -110,6 +112,8 @@ export default function CronogramaSemanal() {
   const [successMessage, setSuccessMessage] = useState("");
   const [saving, setSaving] = useState(false);
   const [eventActionId, setEventActionId] = useState(null);
+  const [editingEventId, setEditingEventId] = useState(null);
+  const [editingTitle, setEditingTitle] = useState("");
   const [form, setForm] = useState({
     dia: "segunda",
     horario: "08:00",
@@ -267,6 +271,21 @@ export default function CronogramaSemanal() {
   }
 
   async function handleDeleteEvent(eventId) {
+    const result = await Swal.fire({
+      title: 'Deletar evento?',
+      text: "Você deseja deletar esse evento?",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#4facfe',
+      confirmButtonText: 'Sim, excluir!',
+      cancelButtonText: 'Manter evento'
+    });
+
+    if (!result.isConfirmed) {
+      return;
+    }
+
     const token = localStorage.getItem("token");
 
     if (!token) {
@@ -306,6 +325,16 @@ export default function CronogramaSemanal() {
   }
 
   async function handlePatchEventTitle(eventItem) {
+    setEditingEventId(eventItem.id);
+    setEditingTitle(eventItem.atividade);
+  }
+
+  function handleCancelEdit() {
+    setEditingEventId(null);
+    setEditingTitle("");
+  }
+
+  async function handleSaveEditTitle(eventId) {
     const token = localStorage.getItem("token");
 
     if (!token) {
@@ -313,18 +342,12 @@ export default function CronogramaSemanal() {
       return;
     }
 
-    if (!eventItem?.id) {
+    if (!eventId) {
       setError("Não foi possível identificar o evento para editar.");
       return;
     }
 
-    const newTitleInput = window.prompt("Novo título do evento:", eventItem.atividade);
-
-    if (newTitleInput === null) {
-      return;
-    }
-
-    const newTitle = newTitleInput.trim();
+    const newTitle = editingTitle.trim();
 
     if (!newTitle) {
       setError("Informe um título válido.");
@@ -332,11 +355,11 @@ export default function CronogramaSemanal() {
     }
 
     try {
-      setEventActionId(eventItem.id);
+      setEventActionId(eventId);
       setError("");
       setSuccessMessage("");
 
-      const response = await fetch(`http://localhost:5000/event/${eventItem.id}`, {
+      const response = await fetch(`http://localhost:5000/event/${eventId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -352,6 +375,8 @@ export default function CronogramaSemanal() {
       }
 
       setSuccessMessage("Título atualizado com sucesso.");
+      setEditingEventId(null);
+      setEditingTitle("");
       await loadEvents();
     } catch (patchError) {
       console.error("Erro ao atualizar título:", patchError);
@@ -458,25 +483,58 @@ export default function CronogramaSemanal() {
                             <div className="schedule-event-list">
                               {dayEvents.map((eventItem) => (
                                 <div key={eventItem.id || `${eventItem.dia}-${eventItem.horario}-${eventItem.atividade}`} className="schedule-event-item">
-                                  <span className="schedule-activity">{eventItem.atividade}</span>
-                                  <div className="schedule-event-actions">
-                                    <button
-                                      type="button"
-                                      className="schedule-mini-button"
-                                      onClick={() => handlePatchEventTitle(eventItem)}
-                                      disabled={eventActionId === eventItem.id}
-                                    >
-                                      Editar
-                                    </button>
-                                    <button
-                                      type="button"
-                                      className="schedule-mini-button schedule-mini-button-danger"
-                                      onClick={() => handleDeleteEvent(eventItem.id)}
-                                      disabled={eventActionId === eventItem.id}
-                                    >
-                                      Excluir
-                                    </button>
-                                  </div>
+                                  {editingEventId === eventItem.id ? (
+                                    <div className="schedule-edit-form">
+                                      <input
+                                        type="text"
+                                        className="schedule-edit-input"
+                                        value={editingTitle}
+                                        onChange={(e) => setEditingTitle(e.target.value)}
+                                        placeholder="Título do evento"
+                                        autoFocus
+                                      />
+                                      <div className="schedule-edit-actions">
+                                        <button
+                                          type="button"
+                                          className="schedule-edit-button schedule-edit-button-confirm"
+                                          onClick={() => handleSaveEditTitle(eventItem.id)}
+                                          disabled={eventActionId === eventItem.id || !editingTitle.trim()}
+                                        >
+                                          Confirmar
+                                        </button>
+                                        <button
+                                          type="button"
+                                          className="schedule-edit-button schedule-edit-button-cancel"
+                                          onClick={handleCancelEdit}
+                                          disabled={eventActionId === eventItem.id}
+                                        >
+                                          Cancelar
+                                        </button>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <>
+                                      <span className="schedule-activity">{eventItem.atividade}</span>
+                                      <div className="schedule-event-actions">
+                                        <button
+                                          type="button"
+                                          className="schedule-mini-button"
+                                          onClick={() => handlePatchEventTitle(eventItem)}
+                                          disabled={eventActionId === eventItem.id}
+                                        >
+                                          Editar
+                                        </button>
+                                        <button
+                                          type="button"
+                                          className="schedule-mini-button schedule-mini-button-danger"
+                                          onClick={() => handleDeleteEvent(eventItem.id)}
+                                          disabled={eventActionId === eventItem.id}
+                                        >
+                                          Excluir
+                                        </button>
+                                      </div>
+                                    </>
+                                  )}
                                 </div>
                               ))}
                             </div>

@@ -17,8 +17,8 @@ export default function TaskCard({ task, onDelete, onEdit, onView, onToggleCompl
       text: "Você deseja deletar esse evento?",
       icon: 'question',
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#4facfe',
       confirmButtonText: 'Sim excluir!',
       cancelButtonText: 'Manter evento'
     });

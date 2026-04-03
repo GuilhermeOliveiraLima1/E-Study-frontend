@@ -70,7 +70,6 @@ export default function TasksPage() {
     try {
       let dueDate = null;
       if (updatedTask.dueDate) {
-        // Se já é ISO ou contém T, usar diretamente; senão, adicionar T00:00:00
         const dueDateStr = updatedTask.dueDate.includes("T") 
           ? updatedTask.dueDate 
           : `${updatedTask.dueDate}T00:00:00`;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import "../styles/UserProfile.css"
 
 function UserProfile({ fechar }) {
@@ -6,33 +6,97 @@ function UserProfile({ fechar }) {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    carregarUsuario()
-  }, [])
+  function extractUserPayload(data) {
+    if (!data || typeof data !== "object") {
+      return {}
+    }
 
-  async function carregarUsuario() {
+    if (data.user && typeof data.user === "object") {
+      return data.user
+    }
+
+    if (data.data && typeof data.data === "object") {
+      return data.data
+    }
+
+    return data
+  }
+
+  const carregarUsuario = useCallback(async () => {
+    const token = localStorage.getItem("token")
+    const apiBaseUrl = (import.meta.env.VITE_API_URL || "http://localhost:5000").trim()
+
+    if (!token) {
+      setLoading(false)
+      setUser(null)
+      return
+    }
+
     try {
-      const response = await fetch(import.meta.env.VITE_API_URL + "/user", {
-        method: "GET",
-        headers: {
-          "Authorization": `Bearer ${localStorage.getItem("token")}`
-        }
-      })
+      const endpoints = ["/user", "/user/profile", "/profile", "/user/me"]
+      let loadedUser = null
 
-      if (response.ok) {
+      for (const endpoint of endpoints) {
+        const response = await fetch(apiBaseUrl + endpoint, {
+          method: "GET",
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        })
+
+        if (!response.ok) {
+          if (response.status === 404) {
+            continue
+          }
+
+          throw new Error("Erro ao carregar dados")
+        }
+
         const data = await response.json()
-        setUser(data)
-      } else {
-        alert("Erro ao carregar dados")
+        const payload = extractUserPayload(data)
+        loadedUser = {
+          name:
+            payload?.name ||
+            payload?.userName ||
+            payload?.username ||
+            localStorage.getItem("userName") ||
+            "",
+          email:
+            payload?.email ||
+            payload?.emailAddress ||
+            payload?.userEmail ||
+            payload?.mail ||
+            localStorage.getItem("userEmail") ||
+            ""
+        }
+        break
       }
+
+      if (!loadedUser) {
+        const cachedName = localStorage.getItem("userName")
+        const cachedEmail = localStorage.getItem("userEmail") || ""
+        if (cachedName) {
+          loadedUser = { name: cachedName, email: cachedEmail }
+        }
+      }
+
+      if (!loadedUser) {
+        throw new Error("Perfil não encontrado")
+      }
+
+      setUser(loadedUser)
 
     } catch (error) {
       console.error(error)
-      alert("Erro na conexão")
+      setUser(null)
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
+
+  useEffect(() => {
+    carregarUsuario()
+  }, [carregarUsuario])
 
   return (
     <div className="modal-overlay">
