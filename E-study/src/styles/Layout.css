@@ -101,6 +101,7 @@
     transition: transform 0.25s ease;
     box-shadow: 8px 0 24px rgba(15, 23, 42, 0.18);
     overflow-y: auto;
+    padding-top: 76px;
   }
 
   .sidebar-open {

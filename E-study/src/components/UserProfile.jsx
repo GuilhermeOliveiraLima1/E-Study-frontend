@@ -46,31 +46,25 @@ function UserProfile({ fechar }) {
 
       const data = await response.json()
       const payload = extractUserPayload(data)
+      const cachedName = localStorage.getItem("userName") || ""
+      const cachedEmail = localStorage.getItem("userEmail") || ""
       const loadedUser = {
         name:
           payload?.name ||
           payload?.userName ||
           payload?.username ||
-          localStorage.getItem("userName") ||
+          cachedName ||
           "",
         email:
           payload?.email ||
           payload?.emailAddress ||
           payload?.userEmail ||
           payload?.mail ||
-          localStorage.getItem("userEmail") ||
+          cachedEmail ||
           ""
       }
 
-      if (!loadedUser) {
-        const cachedName = localStorage.getItem("userName")
-        const cachedEmail = localStorage.getItem("userEmail") || ""
-        if (cachedName) {
-          loadedUser = { name: cachedName, email: cachedEmail }
-        }
-      }
-
-      if (!loadedUser) {
+      if (!loadedUser.name && !loadedUser.email) {
         throw new Error("Perfil não encontrado")
       }
 
