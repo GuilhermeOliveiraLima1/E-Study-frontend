@@ -33,43 +33,33 @@ function UserProfile({ fechar }) {
     }
 
     try {
-      const endpoints = ["/user", "/user/profile", "/profile", "/user/me"]
-      let loadedUser = null
-
-      for (const endpoint of endpoints) {
-        const response = await fetch(apiBaseUrl + endpoint, {
-          method: "GET",
-          headers: {
-            "Authorization": `Bearer ${token}`
-          }
-        })
-
-        if (!response.ok) {
-          if (response.status === 404) {
-            continue
-          }
-
-          throw new Error("Erro ao carregar dados")
+      const response = await fetch(`${apiBaseUrl}/user/user-profile`, {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${token}`
         }
+      })
 
-        const data = await response.json()
-        const payload = extractUserPayload(data)
-        loadedUser = {
-          name:
-            payload?.name ||
-            payload?.userName ||
-            payload?.username ||
-            localStorage.getItem("userName") ||
-            "",
-          email:
-            payload?.email ||
-            payload?.emailAddress ||
-            payload?.userEmail ||
-            payload?.mail ||
-            localStorage.getItem("userEmail") ||
-            ""
-        }
-        break
+      if (!response.ok) {
+        throw new Error("Erro ao carregar dados")
+      }
+
+      const data = await response.json()
+      const payload = extractUserPayload(data)
+      const loadedUser = {
+        name:
+          payload?.name ||
+          payload?.userName ||
+          payload?.username ||
+          localStorage.getItem("userName") ||
+          "",
+        email:
+          payload?.email ||
+          payload?.emailAddress ||
+          payload?.userEmail ||
+          payload?.mail ||
+          localStorage.getItem("userEmail") ||
+          ""
       }
 
       if (!loadedUser) {

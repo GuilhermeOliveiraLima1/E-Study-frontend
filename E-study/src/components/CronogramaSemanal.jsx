@@ -186,6 +186,21 @@ export default function CronogramaSemanal() {
     loadEvents();
   }, [loadEvents]);
 
+  // Auto-dismiss success messages after a few seconds
+  useEffect(() => {
+    if (!successMessage) return;
+    Swal.fire({
+      toast: true,
+      position: "bottom-end",
+      icon: "success",
+      title: successMessage,
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+    });
+    setSuccessMessage("");
+  }, [successMessage]);
+
   const timeSlots = useMemo(() => {
     const slots = events.map((event) => event.horario);
 
@@ -448,9 +463,9 @@ export default function CronogramaSemanal() {
             </button>
             {successMessage && <p className="schedule-status schedule-status-success">{successMessage}</p>}
             {hasScheduleConflict && (
-              <p className="schedule-status schedule-status-error">
+              <div className="alert alert-danger" role="alert">
                 Já existe uma tarefa nesse dia e horário.
-              </p>
+              </div>
             )}
           </div>
         </form>
