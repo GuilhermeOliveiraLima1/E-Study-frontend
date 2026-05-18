@@ -45,6 +45,7 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
+  width: 100%;
 }
 
 .schedule-field {
@@ -53,6 +54,7 @@
   gap: 8px;
   font-weight: 600;
   color: #334155;
+  min-width: 0;
 }
 
 .schedule-field span {
@@ -70,6 +72,7 @@
   font: inherit;
   outline: none;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
 }
 
 .schedule-field input:focus,
@@ -143,10 +146,11 @@
 .schedule-table th,
 .schedule-table td {
   padding: 14px 12px;
-  border-right: 1px solid #e2e8f0;
-  border-bottom: 1px solid #e2e8f0;
+  border: 1px solid #000000;
   text-align: center;
   vertical-align: middle;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .schedule-table thead th {
@@ -159,21 +163,14 @@
   background: #eff6ff;
   color: #1e293b;
   font-weight: 700;
+  width: 92px;
+  min-width: 92px;
+  white-space: nowrap;
 }
 
 .schedule-table tbody td {
   background: #ffffff;
   color: #334155;
-}
-
-.schedule-table tr:last-child th,
-.schedule-table tr:last-child td {
-  border-bottom: 0;
-}
-
-.schedule-table th:last-child,
-.schedule-table td:last-child {
-  border-right: 0;
 }
 
 .schedule-activity {
@@ -322,6 +319,11 @@
   }
 
   .schedule-table {
-    min-width: 680px;
+    min-width: 640px;
+  }
+
+  .schedule-table tbody th {
+    width: 80px;
+    min-width: 80px;
   }
 }

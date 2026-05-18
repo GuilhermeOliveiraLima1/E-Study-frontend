@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 
 function DeleteAccount({ fechar }) {
 
-  const navigate = useNavigate() // ✅ CORRETO
+  const navigate = useNavigate() 
 
   async function handleDelete() {
 

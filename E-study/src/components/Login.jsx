@@ -30,6 +30,7 @@ function Login() {
       if (response.ok) {
         localStorage.setItem("token", data?.tokens?.accessToken || "")
         localStorage.setItem("userName", data?.name || "")
+        localStorage.setItem("userEmail", data?.email || email || "")
         navigate("/home");
       } else {
         alert(data?.errors?.[0] || "Email ou senha inválidos");
