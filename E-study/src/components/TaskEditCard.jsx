@@ -31,23 +31,27 @@ export default function TaskEditCard({ task, onSave, onCancel }) {
         <form onSubmit={handleSubmit}>
 
           <div className="form-group">
-            <label>Título</label>
+            <label htmlFor="title">Título</label>
             <input
+              id="title"
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
+              placeholder="Digite o título da tarefa"
               required
             />
           </div>
 
           <div className="form-group">
-            <label>Descrição</label>
+            <label htmlFor="description">Descrição</label>
 
             <textarea
+              id="description"
               rows="4"
               value={description}
               maxLength={MAX_CHARS}
               onChange={(e) => setDescription(e.target.value)}
+              placeholder="Digite uma descrição (opcional)"
             />
 
             <span className="char-counter">
@@ -57,22 +61,25 @@ export default function TaskEditCard({ task, onSave, onCancel }) {
           </div>
 
           <div className="form-group">
-            <label>Data limite</label>
+            <label htmlFor="dueDate">Data limite</label>
             <input
+              id="dueDate"
               type="date"
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}
             />
           </div>
 
-          <div className="form-group form-group-inline">
-            <input
-              id="task-is-completed"
-              type="checkbox"
-              checked={isCompleted}
-              onChange={(e) => setIsCompleted(e.target.checked)}
-            />
-            <label htmlFor="task-is-completed">Concluida</label>
+          <div className="form-group form-group-checkbox">
+            <label htmlFor="isCompleted" className="checkbox-label">
+              <input
+                id="isCompleted"
+                type="checkbox"
+                checked={isCompleted}
+                onChange={(e) => setIsCompleted(e.target.checked)}
+              />
+              <span>Marcar como concluída</span>
+            </label>
           </div>
 
           <div className="edit-actions">

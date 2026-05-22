@@ -84,28 +84,38 @@ function UserProfile({ fechar }) {
 
   return (
     <div className="modal-overlay">
-
       <div className="modal-box">
-
         <h2>Dados Pessoais</h2>
 
         {loading ? (
-          <p>Carregando...</p>
+          <div className="loading-state">
+            <div className="spinner"></div>
+            <p>Carregando dados...</p>
+          </div>
         ) : user ? (
-          <>
-            <p><strong>Nome:</strong> {user.name}</p>
-            <p><strong>Email:</strong> {user.email}</p>
-          </>
+          <div className="user-info">
+            <div className="info-card">
+              <label>Nome</label>
+              <p className="info-value">{user.name}</p>
+            </div>
+
+            <div className="info-card">
+              <label>Email</label>
+              <p className="info-value">{user.email}</p>
+            </div>
+          </div>
         ) : (
-          <p>Erro ao carregar dados</p>
+          <div className="error-state">
+            <p>⚠️ Erro ao carregar dados pessoais</p>
+          </div>
         )}
 
         <div className="modal-actions">
-          <button onClick={fechar}>Fechar</button>
+          <button className="close-btn" onClick={fechar}>
+            Fechar
+          </button>
         </div>
-
       </div>
-
     </div>
   )
 }

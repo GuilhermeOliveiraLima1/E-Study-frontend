@@ -25,22 +25,26 @@ export default function TaskCreateCard({ onCreate, onCancel, isSubmitting }) {
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label>Titulo</label>
+            <label htmlFor="create-title">Título</label>
             <input
+              id="create-title"
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
+              placeholder="Digite o título da tarefa"
               required
             />
           </div>
 
           <div className="form-group">
-            <label>Descricao</label>
+            <label htmlFor="create-description">Descrição</label>
             <textarea
+              id="create-description"
               rows="4"
               value={description}
               maxLength={MAX_CHARS}
               onChange={(e) => setDescription(e.target.value)}
+              placeholder="Digite uma descrição (opcional)"
             />
             <span className="char-counter">
               {description.length}/{MAX_CHARS}
@@ -48,8 +52,9 @@ export default function TaskCreateCard({ onCreate, onCancel, isSubmitting }) {
           </div>
 
           <div className="form-group">
-            <label>Data limite</label>
+            <label htmlFor="create-dueDate">Data limite</label>
             <input
+              id="create-dueDate"
               type="date"
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}

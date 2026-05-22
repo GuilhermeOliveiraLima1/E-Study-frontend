@@ -6,26 +6,36 @@ function ResetPassword({ fechar }) {
   const [senhaAtual, setSenhaAtual] = useState("")
   const [novaSenha, setNovaSenha] = useState("")
   const [confirmarSenha, setConfirmarSenha] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState("")
+  const [showPassword, setShowPassword] = useState({
+    current: false,
+    new: false,
+    confirm: false
+  })
 
-  async function handleResetSenha() {
+  async function handleResetSenha(e) {
+    e.preventDefault()
+    setError("")
 
-    if (!senhaAtual) {
-      alert("Informe a senha atual")
-      return
-    }
-
-    if (novaSenha !== confirmarSenha) {
-      alert("As senhas não coincidem")
+    if (!senhaAtual.trim()) {
+      setError("Informe a senha atual")
       return
     }
 
     if (novaSenha.length < 6) {
-      alert("A senha deve ter pelo menos 6 caracteres")
+      setError("A nova senha deve ter pelo menos 6 caracteres")
       return
     }
 
-    try {
+    if (novaSenha !== confirmarSenha) {
+      setError("As senhas não coincidem")
+      return
+    }
 
+    setIsSubmitting(true)
+
+    try {
       const response = await fetch(import.meta.env.VITE_API_URL + "/user/change-password", {
         method: "PUT",
         headers: {
@@ -44,60 +54,121 @@ function ResetPassword({ fechar }) {
       } else {
         const erro = await response.json()
         console.log(erro)
-        alert(erro.message || "Erro ao alterar senha")
+        setError(erro.message || "Erro ao alterar senha")
       }
-
     } catch (error) {
       console.error(error)
-      alert("Erro na conexão com o servidor")
+      setError("Erro na conexão com o servidor")
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
+  const togglePasswordVisibility = (field) => {
+    setShowPassword(prev => ({
+      ...prev,
+      [field]: !prev[field]
+    }))
+  }
+
   return (
-
     <div className="modal-overlay">
-
       <div className="modal-box">
-
         <h2>Redefinir Senha</h2>
 
-        <input
-          type="password"
-          placeholder="Senha atual"
-          value={senhaAtual}
-          onChange={(e) => setSenhaAtual(e.target.value)}
-        />
+        {error && <div className="error-message">{error}</div>}
 
-        <input
-          type="password"
-          placeholder="Nova senha"
-          value={novaSenha}
-          onChange={(e) => setNovaSenha(e.target.value)}
-        />
+        <form onSubmit={handleResetSenha}>
+          <div className="form-group">
+            <label htmlFor="senha-atual">Senha Atual</label>
+            <div className="password-input-wrapper">
+              <input
+                id="senha-atual"
+                type={showPassword.current ? "text" : "password"}
+                placeholder="Digite sua senha atual"
+                value={senhaAtual}
+                onChange={(e) => setSenhaAtual(e.target.value)}
+                disabled={isSubmitting}
+              />
+              <button
+                type="button"
+                className="toggle-password"
+                onClick={() => togglePasswordVisibility('current')}
+                disabled={isSubmitting}
+                title={showPassword.current ? "Ocultar" : "Mostrar"}
+              >
+                {showPassword.current ? "👁️" : "👁️‍🗨️"}
+              </button>
+            </div>
+          </div>
 
-        <input
-          type="password"
-          placeholder="Confirmar senha"
-          value={confirmarSenha}
-          onChange={(e) => setConfirmarSenha(e.target.value)}
-        />
+          <div className="form-group">
+            <label htmlFor="nova-senha">Nova Senha</label>
+            <div className="password-input-wrapper">
+              <input
+                id="nova-senha"
+                type={showPassword.new ? "text" : "password"}
+                placeholder="Digite a nova senha"
+                value={novaSenha}
+                onChange={(e) => setNovaSenha(e.target.value)}
+                disabled={isSubmitting}
+              />
+              <button
+                type="button"
+                className="toggle-password"
+                onClick={() => togglePasswordVisibility('new')}
+                disabled={isSubmitting}
+                title={showPassword.new ? "Ocultar" : "Mostrar"}
+              >
+                {showPassword.new ? "👁️" : "👁️‍🗨️"}
+              </button>
+            </div>
+            <small className="password-hint">Mínimo 6 caracteres</small>
+          </div>
 
-        <div className="modal-actions">
+          <div className="form-group">
+            <label htmlFor="confirmar-senha">Confirmar Senha</label>
+            <div className="password-input-wrapper">
+              <input
+                id="confirmar-senha"
+                type={showPassword.confirm ? "text" : "password"}
+                placeholder="Confirme a nova senha"
+                value={confirmarSenha}
+                onChange={(e) => setConfirmarSenha(e.target.value)}
+                disabled={isSubmitting}
+              />
+              <button
+                type="button"
+                className="toggle-password"
+                onClick={() => togglePasswordVisibility('confirm')}
+                disabled={isSubmitting}
+                title={showPassword.confirm ? "Ocultar" : "Mostrar"}
+              >
+                {showPassword.confirm ? "👁️" : "👁️‍🗨️"}
+              </button>
+            </div>
+          </div>
 
-          <button onClick={fechar}>
-            Cancelar
-          </button>
-
-          <button onClick={handleResetSenha}>
-            Confirmar
-          </button>
-
-        </div>
-
+          <div className="modal-actions">
+            <button 
+              type="button"
+              className="cancel"
+              onClick={fechar}
+              disabled={isSubmitting}
+            >
+              Cancelar
+            </button>
+            <button 
+              type="submit"
+              className="confirm"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Salvando..." : "Confirmar"}
+            </button>
+          </div>
+        </form>
       </div>
-
     </div>
-
   )
 }
 
