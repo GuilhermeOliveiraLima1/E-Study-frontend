@@ -95,9 +95,20 @@ function ResetPassword({ fechar }) {
                 className="toggle-password"
                 onClick={() => togglePasswordVisibility('current')}
                 disabled={isSubmitting}
-                title={showPassword.current ? "Ocultar" : "Mostrar"}
+                title={showPassword.current ? "Ocultar senha" : "Mostrar senha"}
+                aria-label={showPassword.current ? "Ocultar senha" : "Mostrar senha"}
               >
-                {showPassword.current ? "👁️" : "👁️‍🗨️"}
+                {showPassword.current ? (
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M4 4l16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                  </svg>
+                ) : (
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" strokeWidth="2" />
+                  </svg>
+                )}
               </button>
             </div>
           </div>
@@ -118,9 +129,20 @@ function ResetPassword({ fechar }) {
                 className="toggle-password"
                 onClick={() => togglePasswordVisibility('new')}
                 disabled={isSubmitting}
-                title={showPassword.new ? "Ocultar" : "Mostrar"}
+                title={showPassword.new ? "Ocultar senha" : "Mostrar senha"}
+                aria-label={showPassword.new ? "Ocultar senha" : "Mostrar senha"}
               >
-                {showPassword.new ? "👁️" : "👁️‍🗨️"}
+                {showPassword.new ? (
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M4 4l16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                  </svg>
+                ) : (
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" strokeWidth="2" />
+                  </svg>
+                )}
               </button>
             </div>
             <small className="password-hint">Mínimo 6 caracteres</small>
@@ -142,9 +164,20 @@ function ResetPassword({ fechar }) {
                 className="toggle-password"
                 onClick={() => togglePasswordVisibility('confirm')}
                 disabled={isSubmitting}
-                title={showPassword.confirm ? "Ocultar" : "Mostrar"}
+                title={showPassword.confirm ? "Ocultar senha" : "Mostrar senha"}
+                aria-label={showPassword.confirm ? "Ocultar senha" : "Mostrar senha"}
               >
-                {showPassword.confirm ? "👁️" : "👁️‍🗨️"}
+                {showPassword.confirm ? (
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M4 4l16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                  </svg>
+                ) : (
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" strokeWidth="2" />
+                  </svg>
+                )}
               </button>
             </div>
           </div>
