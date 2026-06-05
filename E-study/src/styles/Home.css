@@ -86,6 +86,32 @@ body{
   transition: background-color 0.2s ease;
 }
 
+.task-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  flex: 1;
+}
+
+.task-category {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.task-deadline-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-end;
+  margin-left: 15px;
+}
+
+.task-duedate-highlight {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
 .event-item:hover,
 .task-item:hover {
   background-color: #eef4ff;
@@ -151,10 +177,15 @@ body{
   }
 
   .event-time,
-  .task-duedate {
+  .task-deadline-block {
     margin-left: 0;
     margin-top: 8px;
     width: 100%;
-    display: block;
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .task-deadline-block {
+    align-items: flex-start;
   }
 }

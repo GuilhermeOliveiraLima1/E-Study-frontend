@@ -8,6 +8,7 @@ import "../styles/TaskPage.css";
 export default function TasksPage() {
   const apiUrl = (import.meta.env.VITE_API_URL || "").trim();
   const [tasks, setTasks] = useState([]);
+  const [defaultCategories, setDefaultCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -51,9 +52,37 @@ export default function TasksPage() {
     }
   }, [apiUrl]);
 
+  const fetchCategories = useCallback(async () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      return;
+    }
+
+    try {
+      const defaultResponse = await fetch(`${apiUrl}/user-custom-categories/default-categories`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (defaultResponse.ok) {
+        const responseText = await defaultResponse.text();
+        const data = responseText ? JSON.parse(responseText) : [];
+        setDefaultCategories(Array.isArray(data) ? data : []);
+      } else {
+        setDefaultCategories([]);
+      }
+    } catch (requestError) {
+      console.error("Erro ao buscar categorias:", requestError);
+      setDefaultCategories([]);
+    }
+  }, [apiUrl]);
+
   useEffect(() => {
     fetchTasks();
-  }, [fetchTasks]);
+    fetchCategories();
+  }, [fetchTasks, fetchCategories]);
 
   function handleEdit(task) {
     setEditingTask(task);
@@ -81,6 +110,7 @@ export default function TasksPage() {
         description: updatedTask.description?.trim() || "",
         dueDate: dueDate,
         isCompleted: updatedTask.isCompleted === true,
+        category: Number.isInteger(updatedTask.category) ? updatedTask.category : undefined,
       };
 
       const response = await fetch(`${apiUrl}/user-tasks/${updatedTask.id}`, {
@@ -222,6 +252,7 @@ export default function TasksPage() {
         dueDate: newTask.dueDate
           ? new Date(`${newTask.dueDate}T00:00:00`).toISOString()
           : null,
+        category: Number.isInteger(newTask.category) ? newTask.category : undefined,
       };
 
       const response = await fetch(apiUrl + "/user-tasks", {
@@ -256,6 +287,34 @@ export default function TasksPage() {
     return matchesSearch && task.isCompleted !== true;
   });
 
+  const getTaskCategoryLabel = (task) => {
+    if (task?.categoryName) {
+      return task.categoryName;
+    }
+
+    if (Number.isInteger(task?.category)) {
+      const matchedCategory = defaultCategories.find((category) => category?.value === task.category);
+      if (matchedCategory?.name) {
+        return matchedCategory.name;
+      }
+    }
+
+    return "Sem categoria";
+  };
+
+  const groupedTasksEntries = Object.entries(
+    filteredTasks.reduce((groups, task) => {
+      const categoryLabel = getTaskCategoryLabel(task);
+
+      if (!groups[categoryLabel]) {
+        groups[categoryLabel] = [];
+      }
+
+      groups[categoryLabel].push(task);
+      return groups;
+    }, {})
+  ).sort(([categoryA], [categoryB]) => categoryA.localeCompare(categoryB, "pt-BR", { sensitivity: "base" }));
+
   return (
     <div className="tasks-page">
       {loading && <p style={{ textAlign: "center" }}>Carregando tarefas...</p>}
@@ -273,16 +332,24 @@ export default function TasksPage() {
         </button>
       </div>
 
-      <div className="tasks-container">
-        {filteredTasks.map((task) => (
-          <TaskCard
-            key={task.id}
-            task={task}
-            onEdit={handleEdit}
-            onDelete={handleDeleteTask}
-            onView={handleView}
-            onToggleComplete={handleToggleComplete}
-          />
+      <div className="task-groups">
+        {groupedTasksEntries.map(([categoryLabel, categoryTasks]) => (
+          <section key={categoryLabel} className="tasks-category-section">
+            <h3 className="tasks-category-title">{categoryLabel}</h3>
+
+            <div className="tasks-grid">
+              {categoryTasks.map((task) => (
+                <TaskCard
+                  key={task.id}
+                  task={task}
+                  onEdit={handleEdit}
+                  onDelete={handleDeleteTask}
+                  onView={handleView}
+                  onToggleComplete={handleToggleComplete}
+                />
+              ))}
+            </div>
+          </section>
         ))}
       </div>
 
@@ -297,6 +364,7 @@ export default function TasksPage() {
           task={editingTask}
           onSave={handleSave}
           onCancel={handleCancel}
+          defaultCategories={defaultCategories}
         />
       )}
 
@@ -305,6 +373,7 @@ export default function TasksPage() {
           onCreate={handleCreateTask}
           onCancel={handleCloseCreate}
           isSubmitting={isSubmittingCreate}
+          defaultCategories={defaultCategories}
         />
       )}
 

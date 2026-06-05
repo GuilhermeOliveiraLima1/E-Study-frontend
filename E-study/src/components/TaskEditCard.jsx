@@ -1,16 +1,25 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "../styles/TaskEditCard.css";
 
 const MAX_CHARS = 200;
 
-export default function TaskEditCard({ task, onSave, onCancel }) {
+export default function TaskEditCard({
+  task,
+  onSave,
+  onCancel,
+  defaultCategories = [],
+}) {
 
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description || "");
   const [dueDate, setDueDate] = useState(task.dueDate ? String(task.dueDate).slice(0, 10) : "");
   const [isCompleted, setIsCompleted] = useState(task.isCompleted === true);
+  const visibleDefaultCategories = defaultCategories.filter((category) => category?.value !== 0);
+  const [categoryValue, setCategoryValue] = useState(
+    Number.isInteger(task.category) ? String(task.category) : ""
+  );
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     onSave({
@@ -19,6 +28,7 @@ export default function TaskEditCard({ task, onSave, onCancel }) {
       description,
       dueDate: dueDate || null,
       isCompleted,
+      category: categoryValue ? Number(categoryValue) : undefined,
     });
   }
 
@@ -68,6 +78,22 @@ export default function TaskEditCard({ task, onSave, onCancel }) {
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}
             />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="edit-category">Categoria (opcional)</label>
+            <select
+              id="edit-category"
+              value={categoryValue}
+              onChange={(e) => setCategoryValue(e.target.value)}
+            >
+              <option value="">Selecione uma categoria</option>
+              {visibleDefaultCategories.map((category) => (
+                <option key={`default-${category.value}`} value={category.value}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="form-group form-group-checkbox">

@@ -5,6 +5,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const apiUrl = (import.meta.env.VITE_API_URL || "").trim();
 
@@ -14,6 +15,7 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
     try {
       const response = await fetch(apiUrl + "/Login", {
@@ -42,6 +44,8 @@ function Login() {
       }
     } catch (error) {
       console.error("Erro no login:", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -54,6 +58,7 @@ function Login() {
           placeholder="Digite seu email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          disabled={isSubmitting}
         />
       </div>
 
@@ -65,6 +70,7 @@ function Login() {
             placeholder="Digite sua senha"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            disabled={isSubmitting}
           />
           <button
             type="button"
@@ -72,6 +78,7 @@ function Login() {
             onClick={togglePasswordVisibility}
             title={showPassword ? "Ocultar senha" : "Mostrar senha"}
             aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
+            disabled={isSubmitting}
           >
             {showPassword ? (
               <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -88,8 +95,15 @@ function Login() {
         </div>
       </div>
 
-      <button className="login-button" type="submit">
-        Entrar
+      <button className="login-button" type="submit" disabled={isSubmitting} aria-busy={isSubmitting}>
+        {isSubmitting ? (
+          <span className="submit-loading">
+            <span className="submit-spinner" aria-hidden="true" />
+            Entrando...
+          </span>
+        ) : (
+          "Entrar"
+        )}
       </button>
 
       <div className="register-link">

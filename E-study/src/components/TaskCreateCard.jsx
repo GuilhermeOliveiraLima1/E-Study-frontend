@@ -3,20 +3,30 @@ import "../styles/TaskCreateCard.css";
 
 const MAX_CHARS = 200;
 
-export default function TaskCreateCard({ onCreate, onCancel, isSubmitting }) {
+function TaskCreateCard({
+  onCreate,
+  onCancel,
+  isSubmitting,
+  defaultCategories = [],
+}) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState("");
+  const [categoryValue, setCategoryValue] = useState("");
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     onCreate({
       title: title.trim(),
       description: description.trim(),
       dueDate,
+      category: categoryValue ? Number(categoryValue) : undefined,
     });
   }
+
+  const visibleDefaultCategories = defaultCategories.filter((category) => category?.value !== 0);
+  const controlsDisabled = isSubmitting;
 
   return (
     <div className="create-overlay">
@@ -61,6 +71,24 @@ export default function TaskCreateCard({ onCreate, onCancel, isSubmitting }) {
             />
           </div>
 
+          <div className="form-group">
+            <label htmlFor="create-category">Categoria (opcional)</label>
+            <select
+              className="category-select-mobile"
+              id="create-category"
+              value={categoryValue}
+              onChange={(e) => setCategoryValue(e.target.value)}
+              disabled={controlsDisabled}
+            >
+              <option value="">Selecione uma categoria</option>
+              {visibleDefaultCategories.map((category) => (
+                <option key={`default-${category.value}`} value={category.value}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
           <div className="create-actions">
             <button type="button" className="cancel" onClick={onCancel} disabled={isSubmitting}>
               Cancelar
@@ -75,3 +103,5 @@ export default function TaskCreateCard({ onCreate, onCancel, isSubmitting }) {
     </div>
   );
 }
+
+export default TaskCreateCard;

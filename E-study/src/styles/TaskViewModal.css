@@ -39,11 +39,9 @@
 /* animação */
 @keyframes fadeIn {
   from {
-    opacity: 0;
     transform: translateY(20px) scale(0.98);
   }
   to {
-    opacity: 1;
     transform: translateY(0) scale(1);
   }
 }
@@ -53,12 +51,64 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
 }
 
 .view-header h2 {
   margin: 0;
   font-size: 1.5rem;
   color: #0f172a;
+}
+
+.view-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.view-status.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.view-status.completed {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.view-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.view-info-item,
+.view-description-box {
+  background: #dbe2ea !important;
+  border: 1px solid #94a3b8;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.view-info-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #475569;
+  margin-bottom: 6px;
+}
+
+.view-info-value {
+  display: block;
+  color: #0f172a;
+  font-weight: 500;
 }
 
 /* descrição */
@@ -82,18 +132,8 @@
 /* footer */
 .view-footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
-}
-
-/* prazo */
-.view-deadline {
-  background: #fee2e2;
-  color: #b91c1c;
-  padding: 6px 10px;
-  border-radius: 999px;
-  font-size: 0.8rem;
-  font-weight: 500;
 }
 
 /* botão principal */
@@ -112,4 +152,15 @@
 .primary-btn:hover {
   background: #1d4ed8;
   transform: translateY(-1px);
+}
+
+@media (max-width: 600px) {
+  .view-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .view-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }

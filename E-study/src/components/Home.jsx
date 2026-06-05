@@ -15,12 +15,39 @@ function Home() {
     return days[date.getDay()];
   };
 
-  const getTodayDateString = () => {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, "0");
-    const date = String(today.getDate()).padStart(2, "0");
-    return `${year}-${month}-${date}`;
+  const categoryLabels = {
+    0: "Sem categoria",
+    1: "Trabalho",
+    2: "Estudo",
+    3: "Saúde",
+    4: "Exercício",
+    5: "Shopping",
+    6: "Pessoal",
+    7: "Família",
+    8: "Finanças",
+    9: "Entretenimento",
+    10: "Viagem",
+  };
+
+  const formatDate = (value) => {
+    if (!value) return "Sem prazo";
+
+    const dateValue = value.includes("T") ? value : `${value}T00:00:00`;
+    const date = new Date(dateValue);
+
+    if (Number.isNaN(date.getTime())) return "Sem prazo";
+
+    return date.toLocaleDateString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+  };
+
+  const getCategoryLabel = (task) => {
+    if (task?.categoryName) return task.categoryName;
+    if (Number.isInteger(task?.category)) return categoryLabels[task.category] || `Categoria ${task.category}`;
+    return "Sem categoria";
   };
 
   const loadTodayEvents = useCallback(async () => {
@@ -207,11 +234,14 @@ function Home() {
             <ul className="tasks-list">
               {urgentTasks.map((task) => (
                 <li key={task.id} className="task-item">
-                  <span className="task-title">{task.title}</span>
-                  {task.dueDate && (
-                    <span className="task-duedate">
-                      Vence em{" "}
-                      {(() => {
+                  <div className="task-summary">
+                    <span className="task-title">{task.title}</span>
+                    <span className="task-category">{getCategoryLabel(task)}</span>
+                  </div>
+                  <div className="task-deadline-block">
+                    <span className="task-duedate">Prazo: {formatDate(task.dueDate)}</span>
+                    <span className="task-duedate task-duedate-highlight">
+                      Vence em {(() => {
                         const today = new Date();
                         today.setHours(0, 0, 0, 0);
                         const dueDateStr = task.dueDate.includes("T")
@@ -229,7 +259,7 @@ function Home() {
                           : `${daysDiff} dias`;
                       })()}
                     </span>
-                  )}
+                  </div>
                 </li>
               ))}
             </ul>

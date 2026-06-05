@@ -6,6 +6,7 @@ function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
@@ -14,6 +15,7 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
     try {
       const token = localStorage.getItem("token");
@@ -51,6 +53,8 @@ function Register() {
       }
     } catch (error) {
       console.error("Erro no registro:", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -64,6 +68,7 @@ function Register() {
           placeholder="Digite seu nome"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          disabled={isSubmitting}
         />
       </div>
 
@@ -75,6 +80,7 @@ function Register() {
           placeholder="Digite seu email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          disabled={isSubmitting}
         />
       </div>
 
@@ -87,6 +93,7 @@ function Register() {
             placeholder="Crie uma senha"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            disabled={isSubmitting}
           />
           <button
             type="button"
@@ -94,6 +101,7 @@ function Register() {
             onClick={togglePasswordVisibility}
             title={showPassword ? "Ocultar senha" : "Mostrar senha"}
             aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
+            disabled={isSubmitting}
           >
             {showPassword ? (
               <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -110,8 +118,15 @@ function Register() {
         </div>
       </div>
 
-      <button className="register-submit" type="submit">
-        Criar Conta
+      <button className="register-submit" type="submit" disabled={isSubmitting} aria-busy={isSubmitting}>
+        {isSubmitting ? (
+          <span className="submit-loading">
+            <span className="submit-spinner" aria-hidden="true" />
+            Criando...
+          </span>
+        ) : (
+          "Criar Conta"
+        )}
       </button>
       <p>
         Já tem conta? <Link to="/">Login</Link>
