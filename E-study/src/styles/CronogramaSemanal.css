@@ -358,3 +358,11 @@
     justify-content: center;
   }
 }
+
+.schedule-character-counter {
+  display: block;
+  text-align: right;
+  margin-top: 4px;
+  font-size: 0.8rem;
+  color: #6c757d;
+}
