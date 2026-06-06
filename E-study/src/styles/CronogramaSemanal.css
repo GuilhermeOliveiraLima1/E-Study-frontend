@@ -133,6 +133,7 @@
 .schedule-table-wrapper {
   width: 100%;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .schedule-table {
@@ -327,7 +328,8 @@
   }
 
   .schedule-table {
-    min-width: 100%;
+    width: max-content;
+    min-width: 760px;
   }
 
   .schedule-table tbody th {
@@ -338,6 +340,13 @@
   .schedule-table th,
   .schedule-table td {
     padding: 10px 8px;
+  }
+
+  .schedule-table thead th,
+  .schedule-table tbody th {
+    white-space: nowrap;
+    word-break: normal;
+    overflow-wrap: normal;
   }
 
   .schedule-table thead th,
