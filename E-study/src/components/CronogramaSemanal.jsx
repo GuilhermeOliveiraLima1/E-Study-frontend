@@ -12,6 +12,8 @@ const dayOrder = [
   { key: "domingo", label: "Domingo" },
 ];
 
+const EVENT_TITLE_MAX_LENGTH = 25;
+
 
 function formatDateToInput(date) {
   const year = date.getFullYear();
@@ -370,6 +372,11 @@ export default function CronogramaSemanal() {
       return;
     }
 
+    if (newTitle.length > EVENT_TITLE_MAX_LENGTH) {
+      setError(`O título pode ter no máximo ${EVENT_TITLE_MAX_LENGTH} caracteres.`);
+      return;
+    }
+
     try {
       setEventActionId(eventId);
       setError("");
@@ -447,8 +454,12 @@ export default function CronogramaSemanal() {
                 onChange={(event) =>
                   setForm((current) => ({ ...current, title: event.target.value }))
                 }
+                maxLength={EVENT_TITLE_MAX_LENGTH}
                 placeholder="Ex: Estudo"
               />
+              <span className="schedule-character-counter">
+                {form.title.length}/{EVENT_TITLE_MAX_LENGTH}
+              </span>
             </label>
           </div>
 
@@ -506,9 +517,13 @@ export default function CronogramaSemanal() {
                                         className="schedule-edit-input"
                                         value={editingTitle}
                                         onChange={(e) => setEditingTitle(e.target.value)}
+                                        maxLength={EVENT_TITLE_MAX_LENGTH}
                                         placeholder="Título do evento"
                                         autoFocus
                                       />
+                                      <span className="schedule-character-counter">
+                                        {editingTitle.length}/{EVENT_TITLE_MAX_LENGTH}
+                                      </span>                          
                                       <div className="schedule-edit-actions">
                                         <button
                                           type="button"
