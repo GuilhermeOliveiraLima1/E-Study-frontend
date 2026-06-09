@@ -8,9 +8,9 @@
     padding: 30px;
     max-width: 350px;
     margin: 40px auto;
-    background: #1e1e2f;
+    background: #4facfe;
     border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 25px rgba(3, 99, 215, 0.249);
     color: #ffffff;
     font-family: Arial, Helvetica, sans-serif;
 }
@@ -25,7 +25,7 @@
 .timer-display {
     font-size: 3rem;
     font-weight: bold;
-    background: #2a2a40;
+    background: #4cafef;
     padding: 15px 25px;
     border-radius: 10px;
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.4);
@@ -37,7 +37,7 @@
     gap: 12px;
     width: 100%;
     padding: 15px;
-    background: #262638;
+    background: #129bf6;
     border-radius: 10px;
     border: 1px solid #3a3a50;
 }
@@ -62,7 +62,7 @@
 
 .timer-input {
     padding: 8px 10px;
-    background: #1e1e2f;
+    background: #4cafef;
     border: 1px solid #4a4a60;
     border-radius: 6px;
     color: #ffffff;
@@ -81,7 +81,7 @@
 }
 
 .timer-input:disabled {
-    background: #15151f;
+    background: #4cafef;
     color: #808090;
     cursor: not-allowed;
 }
@@ -104,7 +104,7 @@
 
 .settings-panel > label input {
     padding: 8px 10px;
-    background: #1e1e2f;
+    background: #4cafef;
     border: 1px solid #4a4a60;
     border-radius: 6px;
     color: #ffffff;
@@ -114,12 +114,12 @@
 
 .settings-panel > label input:focus {
     outline: none;
-    border-color: #4cafef;
+    border-color: #000dff;
     box-shadow: 0 0 5px rgba(76, 175, 239, 0.3);
 }
 
 .settings-panel > label input:disabled {
-    background: #15151f;
+    background: #4cafef;
     color: #808090;
     cursor: not-allowed;
 }
@@ -143,26 +143,26 @@ button {
 
 /* Botão principal */
 .btn-primary {
-    background: #4cafef;
+    background: #1230f6;;
     color: #fff;
     flex: 1;
     max-width: 150px;
 }
 
 .btn-primary:hover {
-    background: #3a9edb;
+    background: #0900ff;
 }
 
 /* Botão secundário */
 .btn-secondary {
-    background: #555;
+    background:#1230f6;
     color: #fff;
     flex: 1;
     max-width: 150px;
 }
 
 .btn-secondary:hover {
-    background: #444;
+    background: #0059ff;
 }
 
 /* Efeito ao clicar */
