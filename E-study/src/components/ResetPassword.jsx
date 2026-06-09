@@ -1,5 +1,6 @@
 import { useState } from "react"
 import "../styles/ResetPassword.css"
+import TogglePassword from "./TogglePassword"
 
 function ResetPassword({ fechar }) {
 
@@ -90,26 +91,13 @@ function ResetPassword({ fechar }) {
                 onChange={(e) => setSenhaAtual(e.target.value)}
                 disabled={isSubmitting}
               />
-              <button
-                type="button"
-                className="toggle-password"
-                onClick={() => togglePasswordVisibility('current')}
+              <TogglePassword
+                show={showPassword.current}
+                onToggle={() => togglePasswordVisibility('current')}
                 disabled={isSubmitting}
                 title={showPassword.current ? "Ocultar senha" : "Mostrar senha"}
-                aria-label={showPassword.current ? "Ocultar senha" : "Mostrar senha"}
-              >
-                {showPassword.current ? (
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    <path d="M4 4l16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                  </svg>
-                ) : (
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" strokeWidth="2" />
-                  </svg>
-                )}
-              </button>
+                ariaLabel={showPassword.current ? "Ocultar senha" : "Mostrar senha"}
+              />
             </div>
           </div>
 
@@ -124,26 +112,13 @@ function ResetPassword({ fechar }) {
                 onChange={(e) => setNovaSenha(e.target.value)}
                 disabled={isSubmitting}
               />
-              <button
-                type="button"
-                className="toggle-password"
-                onClick={() => togglePasswordVisibility('new')}
+              <TogglePassword
+                show={showPassword.new}
+                onToggle={() => togglePasswordVisibility('new')}
                 disabled={isSubmitting}
                 title={showPassword.new ? "Ocultar senha" : "Mostrar senha"}
-                aria-label={showPassword.new ? "Ocultar senha" : "Mostrar senha"}
-              >
-                {showPassword.new ? (
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    <path d="M4 4l16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                  </svg>
-                ) : (
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" strokeWidth="2" />
-                  </svg>
-                )}
-              </button>
+                ariaLabel={showPassword.new ? "Ocultar senha" : "Mostrar senha"}
+              />
             </div>
             <small className="password-hint">Mínimo 6 caracteres</small>
           </div>
@@ -159,26 +134,13 @@ function ResetPassword({ fechar }) {
                 onChange={(e) => setConfirmarSenha(e.target.value)}
                 disabled={isSubmitting}
               />
-              <button
-                type="button"
-                className="toggle-password"
-                onClick={() => togglePasswordVisibility('confirm')}
+              <TogglePassword
+                show={showPassword.confirm}
+                onToggle={() => togglePasswordVisibility('confirm')}
                 disabled={isSubmitting}
                 title={showPassword.confirm ? "Ocultar senha" : "Mostrar senha"}
-                aria-label={showPassword.confirm ? "Ocultar senha" : "Mostrar senha"}
-              >
-                {showPassword.confirm ? (
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    <path d="M4 4l16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                  </svg>
-                ) : (
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" strokeWidth="2" />
-                  </svg>
-                )}
-              </button>
+                ariaLabel={showPassword.confirm ? "Ocultar senha" : "Mostrar senha"}
+              />
             </div>
           </div>
 
