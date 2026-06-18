@@ -1,16 +1,76 @@
-# React + Vite
+# E-study
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+E-study é um frontend React desenvolvido com Vite para uma aplicação de produtividade estudantil. O projeto integra autenticação, gerenciamento de tarefas, cronograma, Pomodoro e ajustes de usuário em uma interface moderna e responsiva.
+## Site hospedado em:
+```
+https://e-study-frontend.netlify.app
+```
+## Funcionalidades
 
-Currently, two official plugins are available:
+- Autenticação de usuário com telas de login e cadastro
+- Recuperação de senha através de formulário de reset
+- Página principal com visão geral do estudo
+- Gerenciamento de tarefas:
+  - criação, edição e visualização de tarefas
+  - seção de tarefas concluídas
+- Cronograma semanal para organizar atividades
+- Temporizador Pomodoro para foco e pausas
+- Configurações do usuário e menu de conta
+- Página "Sobre" com informações do projeto
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Estrutura de rotas
 
-## React Compiler
+- `/` - Login
+- `/register` - Cadastro
+- `/home` - Página inicial do usuário autenticado
+- `/tasks` - Lista de tarefas
+- `/tasks/completed` - Tarefas concluídas
+- `/schedule` - Cronograma semanal
+- `/pomodoro` - Temporizador Pomodoro
+- `/settings` - Configurações do usuário
+- `/about` - Sobre o projeto
+- `/account` - Gestão de conta
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tecnologias
 
-## Expanding the ESLint configuration
+- React 19
+- Vite
+- React Router DOM
+- ESLint
+- SweetAlert2
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Como executar
+
+1. Instale as dependências:
+
+```bash
+npm install
+```
+
+2. Inicie o servidor de desenvolvimento:
+
+```bash
+npm run dev
+```
+
+3. Abra a aplicação no navegador usando a URL exibida no terminal.
+
+## Scripts úteis
+
+- `npm run dev` - inicia o servidor de desenvolvimento
+- `npm run build` - gera a versão de produção
+- `npm run preview` - pré-visualiza a build de produção
+- `npm run lint` - executa o ESLint no projeto
+
+## Estrutura de pastas
+
+- `src/` - código-fonte principal
+  - `components/` - componentes reutilizáveis
+  - `layouts/` - layout principal da aplicação
+  - `pages/` - páginas principais da interface
+  - `styles/` - arquivos CSS específicos
+  - `assets/` - ativos estáticos
+
+## Observações
+
+Este projeto é focado no frontend e usa rotas protegidas para garantir que apenas usuários autenticados acessem as páginas internas.
