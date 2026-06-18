@@ -71,6 +71,3 @@ npm run dev
   - `styles/` - arquivos CSS específicos
   - `assets/` - ativos estáticos
 
-## Observações
-
-Este projeto é focado no frontend e usa rotas protegidas para garantir que apenas usuários autenticados acessem as páginas internas.
